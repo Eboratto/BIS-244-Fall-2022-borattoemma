@@ -1,0 +1,24 @@
+library(tidyverse)
+
+View(covid-19-data)
+us_states <- read_csv("us-states.csv")
+
+pa_state <- us_states %>% filter(state == "Pennsylvania")
+
+n <- length(pa_state$date)
+
+pa_state$incr_cases <- 1
+
+for (i in 2:n) {
+  pa_state$incr_cases[i] <- (pa_state$cases[i]-pa_state$cases[i-1])
+}
+
+m <- length(pa_state$deaths)
+
+pa_state$incr_deaths <- 1
+
+for (i in 2:m) {
+  pa_state$incr_deaths[i] <- (pa_state$deaths[i]-pa_state$deaths[i-1])
+}
+
+sd(pa_state$incr_cases)
